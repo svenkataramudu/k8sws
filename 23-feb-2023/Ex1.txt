@@ -1,0 +1,279 @@
+login as: ssk
+ssk@192.168.26.167's password:
+Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.0-60-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Feb 16 10:50:53 AM UTC 2023
+
+  System load:  1.0458984375       Processes:                145
+  Usage of /:   28.0% of 24.44GB   Users logged in:          0
+  Memory usage: 42%                IPv4 address for docker0: 172.17.0.1
+  Swap usage:   0%                 IPv4 address for enp0s3:  10.0.2.15
+
+
+67 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Thu Feb 23 04:14:15 2023
+ssk@ubuntu1:~$
+ssk@ubuntu1:~$ docker --version
+Docker version 20.10.17, build 100c70180f
+ssk@ubuntu1:~$ sudo apt-get update
+[sudo] password for ssk:
+Hit:1 http://in.archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://in.archive.ubuntu.com/ubuntu jammy-updates InRelease [119 kB]
+Get:3 http://in.archive.ubuntu.com/ubuntu jammy-backports InRelease [107 kB]
+Get:4 http://in.archive.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:5 http://in.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [898                                                                                         kB]
+Get:6 http://in.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages                                                                                         [853 kB]
+Get:7 http://in.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Met                                                                                        adata [17.3 kB]
+Get:8 http://in.archive.ubuntu.com/ubuntu jammy-security/universe amd64 Packages                                                                                         [678 kB]
+Get:9 http://in.archive.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Me                                                                                        tadata [13.1 kB]
+Fetched 2,795 kB in 5s (568 kB/s)
+Reading package lists... Done
+ssk@ubuntu1:~$ sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+lsb-release is already the newest version (11.1.0ubuntu4).
+ca-certificates is already the newest version (20211016ubuntu0.22.04.1).
+curl is already the newest version (7.81.0-1ubuntu1.7).
+gnupg is already the newest version (2.2.27-3ubuntu2.1).
+0 upgraded, 0 newly installed, 0 to remove and 67 not upgraded.
+ssk@ubuntu1:~$ docker -v
+Docker version 20.10.17, build 100c70180f
+ssk@ubuntu1:~$ sudo mkdir -m 0755 -p /etc/apt/keyrings
+ssk@ubuntu1:~$ sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o                                                                                         /etc/apt/keyrings/docker.gpg
+File '/etc/apt/keyrings/docker.gpg' exists. Overwrite? (y/N) y
+ssk@ubuntu1:~$ ls
+snap
+ssk@ubuntu1:~$ echo
+
+ssk@ubuntu1:~$ echo \
+>
+
+ssk@ubuntu1:~$ sudo -
+sudo: -: command not found
+ssk@ubuntu1:~$ cd /r
+root/ run/
+ssk@ubuntu1:~$ cd /root/
+-bash: cd: /root/: Permission denied
+ssk@ubuntu1:~$ ls
+snap
+ssk@ubuntu1:~$ sudo su -
+root@ubuntu1:~# echo \
+
+root@ubuntu1:~# echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg                                                                                        ] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /d                                                                                        ev/null
+root@ubuntu1:~# sudo apt-get update
+Get:1 https://download.docker.com/linux/ubuntu jammy InRelease [48.9 kB]
+Hit:2 http://in.archive.ubuntu.com/ubuntu jammy InRelease
+Get:3 https://download.docker.com/linux/ubuntu jammy/stable amd64 Packages [13.6                                                                                         kB]
+Hit:4 http://in.archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:5 http://in.archive.ubuntu.com/ubuntu jammy-backports InRelease
+Hit:6 http://in.archive.ubuntu.com/ubuntu jammy-security InRelease
+Fetched 62.5 kB in 2s (34.5 kB/s)
+Reading package lists... Done
+root@ubuntu1:~# sudo apt-get install docker-ce docker-ce-cli containerd.io docke                                                                                        r-buildx-plugin docker-compose-plugin
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  docker-ce-rootless-extras docker-scan-plugin libltdl7 libslirp0 pigz
+  slirp4netns
+Suggested packages:
+  aufs-tools cgroupfs-mount | cgroup-lite
+The following NEW packages will be installed:
+  containerd.io docker-buildx-plugin docker-ce docker-ce-cli
+  docker-ce-rootless-extras docker-compose-plugin docker-scan-plugin libltdl7
+  libslirp0 pigz slirp4netns
+0 upgraded, 11 newly installed, 0 to remove and 67 not upgraded.
+Need to get 112 MB of archives.
+After this operation, 401 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 https://download.docker.com/linux/ubuntu jammy/stable amd64 containerd.io                                                                                         amd64 1.6.18-1 [28.2 MB]
+Get:2 http://in.archive.ubuntu.com/ubuntu jammy/universe amd64 pigz amd64 2.6-1                                                                                         [63.6 kB]
+Get:3 http://in.archive.ubuntu.com/ubuntu jammy/main amd64 libltdl7 amd64 2.4.6-                                                                                        15build2 [39.6 kB]
+Get:4 http://in.archive.ubuntu.com/ubuntu jammy/main amd64 libslirp0 amd64 4.6.1                                                                                        -1build1 [61.5 kB]
+Get:5 http://in.archive.ubuntu.com/ubuntu jammy/universe amd64 slirp4netns amd64                                                                                         1.0.1-2 [28.2 kB]
+Get:6 https://download.docker.com/linux/ubuntu jammy/stable amd64 docker-buildx-                                                                                        plugin amd64 0.10.2-1~ubuntu.22.04~jammy [25.9 MB]
+Get:7 https://download.docker.com/linux/ubuntu jammy/stable amd64 docker-ce-cli                                                                                         amd64 5:23.0.1-1~ubuntu.22.04~jammy [13.2 MB]
+Get:8 https://download.docker.com/linux/ubuntu jammy/stable amd64 docker-ce amd6                                                                                        4 5:23.0.1-1~ubuntu.22.04~jammy [22.0 MB]
+Get:9 https://download.docker.com/linux/ubuntu jammy/stable amd64 docker-ce-root                                                                                        less-extras amd64 5:23.0.1-1~ubuntu.22.04~jammy [8,760 kB]
+Get:10 https://download.docker.com/linux/ubuntu jammy/stable amd64 docker-compos                                                                                        e-plugin amd64 2.16.0-1~ubuntu.22.04~jammy [10.2 MB]
+Get:11 https://download.docker.com/linux/ubuntu jammy/stable amd64 docker-scan-p                                                                                        lugin amd64 0.23.0~ubuntu-jammy [3,623 kB]
+Fetched 112 MB in 25s (4,519 kB/s)
+Selecting previously unselected package pigz.
+(Reading database ... 73687 files and directories currently installed.)
+Preparing to unpack .../00-pigz_2.6-1_amd64.deb ...
+Unpacking pigz (2.6-1) ...
+Selecting previously unselected package containerd.io.
+Preparing to unpack .../01-containerd.io_1.6.18-1_amd64.deb ...
+Unpacking containerd.io (1.6.18-1) ...
+Selecting previously unselected package docker-buildx-plugin.
+Preparing to unpack .../02-docker-buildx-plugin_0.10.2-1~ubuntu.22.04~jammy_amd6                                                                                        4.deb ...
+Unpacking docker-buildx-plugin (0.10.2-1~ubuntu.22.04~jammy) ...
+Selecting previously unselected package docker-ce-cli.
+Preparing to unpack .../03-docker-ce-cli_5%3a23.0.1-1~ubuntu.22.04~jammy_amd64.d                                                                                        eb ...
+Unpacking docker-ce-cli (5:23.0.1-1~ubuntu.22.04~jammy) ...
+Selecting previously unselected package docker-ce.
+Preparing to unpack .../04-docker-ce_5%3a23.0.1-1~ubuntu.22.04~jammy_amd64.deb .                                                                                        ..
+Unpacking docker-ce (5:23.0.1-1~ubuntu.22.04~jammy) ...
+Selecting previously unselected package docker-ce-rootless-extras.
+Preparing to unpack .../05-docker-ce-rootless-extras_5%3a23.0.1-1~ubuntu.22.04~j                                                                                        ammy_amd64.deb ...
+Unpacking docker-ce-rootless-extras (5:23.0.1-1~ubuntu.22.04~jammy) ...
+Selecting previously unselected package docker-compose-plugin.
+Preparing to unpack .../06-docker-compose-plugin_2.16.0-1~ubuntu.22.04~jammy_amd                                                                                        64.deb ...
+Unpacking docker-compose-plugin (2.16.0-1~ubuntu.22.04~jammy) ...
+Selecting previously unselected package docker-scan-plugin.
+Preparing to unpack .../07-docker-scan-plugin_0.23.0~ubuntu-jammy_amd64.deb ...
+Unpacking docker-scan-plugin (0.23.0~ubuntu-jammy) ...
+Selecting previously unselected package libltdl7:amd64.
+Preparing to unpack .../08-libltdl7_2.4.6-15build2_amd64.deb ...
+Unpacking libltdl7:amd64 (2.4.6-15build2) ...
+Selecting previously unselected package libslirp0:amd64.
+Preparing to unpack .../09-libslirp0_4.6.1-1build1_amd64.deb ...
+Unpacking libslirp0:amd64 (4.6.1-1build1) ...
+Selecting previously unselected package slirp4netns.
+Preparing to unpack .../10-slirp4netns_1.0.1-2_amd64.deb ...
+Unpacking slirp4netns (1.0.1-2) ...
+Setting up docker-scan-plugin (0.23.0~ubuntu-jammy) ...
+Setting up docker-buildx-plugin (0.10.2-1~ubuntu.22.04~jammy) ...
+Setting up containerd.io (1.6.18-1) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/containerd.service →                                                                                         /lib/systemd/system/containerd.service.
+Setting up docker-compose-plugin (2.16.0-1~ubuntu.22.04~jammy) ...
+Setting up libltdl7:amd64 (2.4.6-15build2) ...
+Setting up docker-ce-cli (5:23.0.1-1~ubuntu.22.04~jammy) ...
+Setting up libslirp0:amd64 (4.6.1-1build1) ...
+Setting up pigz (2.6-1) ...
+Setting up docker-ce-rootless-extras (5:23.0.1-1~ubuntu.22.04~jammy) ...
+Setting up slirp4netns (1.0.1-2) ...
+Setting up docker-ce (5:23.0.1-1~ubuntu.22.04~jammy) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/docker.service → /li                                                                                        b/systemd/system/docker.service.
+Created symlink /etc/systemd/system/sockets.target.wants/docker.socket → /lib/sy                                                                                        stemd/system/docker.socket.
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.1) ...
+Scanning processes...
+Scanning linux images...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+root@ubuntu1:~# systemctl status docker.service
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset>
+     Active: active (running) since Thu 2023-02-23 04:38:15 UTC; 34s ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 27682 (dockerd)
+      Tasks: 8
+     Memory: 34.6M
+        CPU: 2.226s
+     CGroup: /system.slice/docker.service
+             └─27682 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/con>
+
+Feb 23 04:38:13 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:13.613376299Z" l>
+Feb 23 04:38:13 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:13.613406277Z" l>
+Feb 23 04:38:13 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:13.791316040Z" l>
+Feb 23 04:38:14 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:14.729324052Z" l>
+Feb 23 04:38:15 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:15.149330778Z" l>
+Feb 23 04:38:15 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:15.572806531Z" l>
+Feb 23 04:38:15 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:15.592344237Z" l>
+Feb 23 04:38:15 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:15.742515863Z" l>
+Feb 23 04:38:15 ubuntu1 systemd[1]: Started Docker Application Container Engine.
+Feb 23 04:38:15 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:15.801004979Z" l>
+lines 1-22/22 (END)...skipping...
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: active (running) since Thu 2023-02-23 04:38:15 UTC; 34s ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 27682 (dockerd)
+      Tasks: 8
+     Memory: 34.6M
+        CPU: 2.226s
+     CGroup: /system.slice/docker.service
+             └─27682 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Feb 23 04:38:13 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:13.613376299Z" level=info msg="[core] [Channel #4 SubChannel #5] Subchannel Connectivity change to READY>
+Feb 23 04:38:13 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:13.613406277Z" level=info msg="[core] [Channel #4] Channel Connectivity change to READY" module=grpc
+Feb 23 04:38:13 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:13.791316040Z" level=info msg="Loading containers: start."
+Feb 23 04:38:14 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:14.729324052Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17.0.0/16. Da>
+Feb 23 04:38:15 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:15.149330778Z" level=info msg="Loading containers: done."
+Feb 23 04:38:15 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:15.572806531Z" level=info msg="Docker daemon" commit=bc3805a graphdriver=overlay2 version=23.0.1
+Feb 23 04:38:15 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:15.592344237Z" level=info msg="Daemon has completed initialization"
+Feb 23 04:38:15 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:15.742515863Z" level=info msg="[core] [Server #7] Server created" module=grpc
+Feb 23 04:38:15 ubuntu1 systemd[1]: Started Docker Application Container Engine.
+Feb 23 04:38:15 ubuntu1 dockerd[27682]: time="2023-02-23T04:38:15.801004979Z" level=info msg="API listen on /run/docker.sock"
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+root@ubuntu1:~# sudo docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+2db29710123e: Pull complete
+Digest: sha256:6e8b6f026e0b9c419ea0fd02d3905dd0952ad1feea67543f525c73a0a790fefb
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+root@ubuntu1:~# ^C
+root@ubuntu1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu1:~# docker ps -a
+CONTAINER ID   IMAGE         COMMAND    CREATED         STATUS                     PORTS     NAMES
+a9fc5ec0667a   hello-world   "/hello"   2 minutes ago   Exited (0) 2 minutes ago             relaxed_bardeen
+root@ubuntu1:~#

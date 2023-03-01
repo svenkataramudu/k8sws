@@ -1,0 +1,421 @@
+$$$$$$$$$$$
+Initiating docker and pulling ngnix and showing the data in web port 8080
+$$$$$$$$$$$
+
+
+
+login as: ssk
+ssk@192.168.26.105's password:
+Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.0-60-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Mar  1 10:08:25 AM UTC 2023
+
+  System load:  1.07080078125      Processes:               131
+  Usage of /:   27.7% of 24.44GB   Users logged in:         0
+  Memory usage: 13%                IPv4 address for enp0s3: 192.168.26.105
+  Swap usage:   0%
+
+
+62 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Wed Mar  1 10:08:30 2023
+ssk@ubuntu1:~$
+ssk@ubuntu1:~$ docker ps
+Got permission denied while trying to connect to the Docker daemon socket at uni                                                                                        x:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/container                                                                                        s/json": dial unix /var/run/docker.sock: connect: permission denied
+ssk@ubuntu1:~$ sudo docker ps
+[sudo] password for ssk:
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+ssk@ubuntu1:~$
+ssk@ubuntu1:~$ sudo su -
+root@ubuntu1:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu1:~# docker images --all
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+root@ubuntu1:~# docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+bb263680fed1: Pull complete
+258f176fd226: Pull complete
+a0bc35e70773: Pull complete
+077b9569ff86: Pull complete
+3082a16f3b61: Pull complete
+7e9b29976cce: Pull complete
+Digest: sha256:30bba6c267c24237c5b6f3c59a6e566365b80662f80935535ba3d6a694afe7e8
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+root@ubuntu1:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+nginx        latest    3f8a00f137a0   2 weeks ago   142MB
+root@ubuntu1:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu1:~#
+root@ubuntu1:~# docker container run -dt --name sai -p 8080:80 nginx
+08177e4ae37e36b639ce2a4c7dbe75a4fb79cdbf866be6dc4933fd936cdb2e95
+docker root@ubuntu1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS                                                                                                 PORTS                                   NAMES
+08177e4ae37e   nginx     "/docker-entrypoint.…"   8 seconds ago   Up 2 seconds                                                                                           0.0.0.0:8080->80/tcp, :::8080->80/tcp   sai
+root@ubuntu1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                                                                                                 PORTS                                   NAMES
+08177e4ae37e   nginx     "/docker-entrypoint.…"   12 seconds ago   Up 6 seconds                                                                                           0.0.0.0:8080->80/tcp, :::8080->80/tcp   sai
+root@ubuntu1:~#
+root@ubuntu1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                   NAMES
+08177e4ae37e   nginx     "/docker-entrypoint.…"   22 seconds ago   Up 16 seconds   0.0.0.0:8080->80/tcp, :::8080->80/tcp   sai
+root@ubuntu1:~# docker inspect 08177e4ae37e
+[
+    {
+        "Id": "08177e4ae37e36b639ce2a4c7dbe75a4fb79cdbf866be6dc4933fd936cdb2e95",
+        "Created": "2023-03-01T10:13:07.137306824Z",
+        "Path": "/docker-entrypoint.sh",
+        "Args": [
+            "nginx",
+            "-g",
+            "daemon off;"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 9466,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2023-03-01T10:13:12.755278963Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:3f8a00f137a0d2c8a2163a09901e28e2471999fde4efc2f9570b91f1c30acf94",
+        "ResolvConfPath": "/var/snap/docker/common/var-lib-docker/containers/08177e4ae37e36b639ce2a4c7dbe75a4fb79cdbf866be6dc4933fd936cdb2e95/resolv.conf",
+        "HostnamePath": "/var/snap/docker/common/var-lib-docker/containers/08177e4ae37e36b639ce2a4c7dbe75a4fb79cdbf866be6dc4933fd936cdb2e95/hostname",
+        "HostsPath": "/var/snap/docker/common/var-lib-docker/containers/08177e4ae37e36b639ce2a4c7dbe75a4fb79cdbf866be6dc4933fd936cdb2e95/hosts",
+        "LogPath": "/var/snap/docker/common/var-lib-docker/containers/08177e4ae37e36b639ce2a4c7dbe75a4fb79cdbf866be6dc4933fd936cdb2e95/08177e4ae37e36b639ce2a4c7dbe75a4fb79cdbf866be6dc4933fd936cdb2e95-json.log",
+        "Name": "/sai",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {
+                "80/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8080"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "KernelMemory": 0,
+            "KernelMemoryTCP": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/snap/docker/common/var-lib-docker/overlay2/03682ab175ba5ae26e1dfdcd2ff4e1d518252e66249bc2b4b0da2c31f0201bae-init/diff:/var/snap/docker/common/var-lib-docker/overlay2/98d7751bc103cbf3d7f956d8acbf43c640f75aed126099b23b47c4603653bc33/diff:/var/snap/docker/common/var-lib-docker/overlay2/b2f19e752a370fc139572f81981b8312f444c39e96b44acd06aaeca5ec496251/diff:/var/snap/docker/common/var-lib-docker/overlay2/7d9d69c2b547b99a44222215e6bd473b3b3c934cc4bf55f090d2f0f07e949f2b/diff:/var/snap/docker/common/var-lib-docker/overlay2/aa5f4dd11cc60e00b5516c834ca6fc7b101f466ae80c1e0aed34bf42ca6e21af/diff:/var/snap/docker/common/var-lib-docker/overlay2/181e9c77ecaeb0f464d072445a2593419ee062e83c4005ad3c2f1244d8bf5ae3/diff:/var/snap/docker/common/var-lib-docker/overlay2/47f0afa151c61786112378b6a2dd51f9b2e85a30ca46075d84de71da32ea7e18/diff",
+                "MergedDir": "/var/snap/docker/common/var-lib-docker/overlay2/03682ab175ba5ae26e1dfdcd2ff4e1d518252e66249bc2b4b0da2c31f0201bae/merged",
+                "UpperDir": "/var/snap/docker/common/var-lib-docker/overlay2/03682ab175ba5ae26e1dfdcd2ff4e1d518252e66249bc2b4b0da2c31f0201bae/diff",
+                "WorkDir": "/var/snap/docker/common/var-lib-docker/overlay2/03682ab175ba5ae26e1dfdcd2ff4e1d518252e66249bc2b4b0da2c31f0201bae/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "08177e4ae37e",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": true,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.23.3",
+                "NJS_VERSION=0.7.9",
+                "PKG_RELEASE=1~bullseye"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "Image": "nginx",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGQUIT"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "ac2321a177111e17c5db78907817f0c538bfd26a2337eaf88985d361faa080cf",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "80/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "8080"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "8080"
+                    }
+                ]
+            },
+            "SandboxKey": "/run/snap.docker/netns/ac2321a17711",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "0311be50e32a1b9621726bada305c767ab74bec7cb30e1af575d87ae73dd1a66",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "67f41d85517199c979a51a45d34577ef9105d69b45abd61d6e6c606aaf2c0b59",
+                    "EndpointID": "0311be50e32a1b9621726bada305c767ab74bec7cb30e1af575d87ae73dd1a66",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+root@ubuntu1:~# curl 172.17.0.2
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+root@ubuntu1:~# ifconfig -a
+Command 'ifconfig' not found, but can be installed with:
+apt install net-tools
+root@ubuntu1:~# apt install net-tools
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  net-tools
+0 upgraded, 1 newly installed, 0 to remove and 64 not upgraded.
+Need to get 204 kB of archives.
+After this operation, 819 kB of additional disk space will be used.
+Get:1 http://in.archive.ubuntu.com/ubuntu jammy/main amd64 net-tools amd64 1.60+git20181103.0eebece-1ubuntu5 [204 kB]
+Fetched 204 kB in 6s (36.2 kB/s)
+Selecting previously unselected package net-tools.
+(Reading database ... 73630 files and directories currently installed.)
+Preparing to unpack .../net-tools_1.60+git20181103.0eebece-1ubuntu5_amd64.deb ...
+Unpacking net-tools (1.60+git20181103.0eebece-1ubuntu5) ...
+Setting up net-tools (1.60+git20181103.0eebece-1ubuntu5) ...
+Processing triggers for man-db (2.10.2-1) ...
+Scanning processes...
+Scanning linux images...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+root@ubuntu1:~# ifconfig -a
+cali8586679413e: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::ecee:eeff:feee:eeee  prefixlen 64  scopeid 0x20<link>
+        ether ee:ee:ee:ee:ee:ee  txqueuelen 0  (Ethernet)
+        RX packets 220  bytes 21324 (21.3 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 232  bytes 173677 (173.6 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:cbff:fe60:7cf2  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:cb:60:7c:f2  txqueuelen 0  (Ethernet)
+        RX packets 7  bytes 1177 (1.1 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 16  bytes 1534 (1.5 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.26.105  netmask 255.255.255.0  broadcast 192.168.26.255
+        inet6 fe80::a00:27ff:fe61:e83a  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:61:e8:3a  txqueuelen 1000  (Ethernet)
+        RX packets 102393  bytes 137007308 (137.0 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 11663  bytes 1025381 (1.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 46107  bytes 23284886 (23.2 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 46107  bytes 23284886 (23.2 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+veth829c035: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::5032:d9ff:fe25:e076  prefixlen 64  scopeid 0x20<link>
+        ether 52:32:d9:25:e0:76  txqueuelen 0  (Ethernet)
+        RX packets 7  bytes 1275 (1.2 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 23  bytes 2280 (2.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vxlan.calico: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
+        inet 10.1.25.128  netmask 255.255.255.255  broadcast 0.0.0.0
+        inet6 fe80::64b3:48ff:fef2:bc35  prefixlen 64  scopeid 0x20<link>
+        ether 66:b3:48:f2:bc:35  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 7 overruns 0  carrier 0  collisions 0
+
+root@ubuntu1:~# exit
+logout
+ssk@ubuntu1:~$ poweroff
+Failed to set wall message, ignoring: Interactive authentication required.
+Failed to power off system via logind: Interactive authentication required.
+Failed to open initctl fifo: Permission denied
+Failed to talk to init daemon.
+ssk@ubuntu1:~$

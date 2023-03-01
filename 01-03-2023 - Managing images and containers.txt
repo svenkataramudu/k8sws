@@ -1,0 +1,482 @@
+$$$$$$$$$$$$
+Pulling images of docker and running containers and managing them
+$$$$$$$$$$$$
+
+
+login as: ssk
+ssk@192.168.26.105's password:
+Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.0-60-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Mar  1 06:19:40 AM UTC 2023
+
+  System load:  1.67626953125      Processes:                143
+  Usage of /:   32.3% of 24.44GB   Users logged in:          1
+  Memory usage: 46%                IPv4 address for docker0: 172.17.0.1
+  Swap usage:   1%                 IPv4 address for enp0s3:  192.168.26.105
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+74 updates can be applied immediately.
+7 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Wed Mar  1 05:54:45 2023 from 192.168.26.235
+ssk@ubuntu1:~$
+ssk@ubuntu1:~$ pwd
+/home/ssk
+ssk@ubuntu1:~$ ls
+snap
+ssk@ubuntu1:~$ docker -v
+Docker version 23.0.1, build a5ee5b1
+ssk@ubuntu1:~$ docker -V
+unknown shorthand flag: 'V' in -V
+See 'docker --help'.
+
+Usage:  docker [OPTIONS] COMMAND
+
+A self-sufficient runtime for containers
+
+Common Commands:
+  run         Create and run a new container from an image
+  exec        Execute a command in a running container
+  ps          List containers
+  build       Build an image from a Dockerfile
+  pull        Download an image from a registry
+  push        Upload an image to a registry
+  images      List images
+  login       Log in to a registry
+  logout      Log out from a registry
+  search      Search Docker Hub for images
+  version     Show the Docker version information
+  info        Display system-wide information
+
+Management Commands:
+  builder     Manage builds
+  buildx*     Docker Buildx (Docker Inc., v0.10.2)
+  checkpoint  Manage checkpoints
+  compose*    Docker Compose (Docker Inc., v2.16.0)
+  container   Manage containers
+  context     Manage contexts
+  image       Manage images
+  manifest    Manage Docker image manifests and manifest lists
+  network     Manage networks
+  plugin      Manage plugins
+  scan*       Docker Scan (Docker Inc., v0.23.0)
+  system      Manage Docker
+  trust       Manage trust on Docker images
+  volume      Manage volumes
+
+Swarm Commands:
+  config      Manage Swarm configs
+  node        Manage Swarm nodes
+  secret      Manage Swarm secrets
+  service     Manage Swarm services
+  stack       Manage Swarm stacks
+  swarm       Manage Swarm
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  events      Get real time events from the server
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  import      Import the contents from a tarball to create a filesystem image
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  wait        Block until one or more containers stop, then print their exit codes
+
+Global Options:
+      --config string      Location of client config files (default "/home/ssk/.docker")
+  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set with "docker context use")
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level ("debug", "info", "warn", "error", "fatal") (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default "/home/ssk/.docker/ca.pem")
+      --tlscert string     Path to TLS certificate file (default "/home/ssk/.docker/cert.pem")
+      --tlskey string      Path to TLS key file (default "/home/ssk/.docker/key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Run 'docker COMMAND --help' for more information on a command.
+
+For more help on how to use Docker, head to https://docs.docker.com/go/guides/
+
+ssk@ubuntu1:~$ systemctl status docker.service
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2023-03-01 05:52:31 UTC; 28min ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 883 (dockerd)
+      Tasks: 15
+     Memory: 38.3M
+        CPU: 8.441s
+     CGroup: /system.slice/docker.service
+             └─883 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Mar 01 05:52:26 ubuntu1 dockerd[883]: time="2023-03-01T05:52:26.650971086Z" level=info msg="[core] [Channel #4] Channel Connectivity change to READY" module=grpc
+Mar 01 05:52:27 ubuntu1 dockerd[883]: time="2023-03-01T05:52:27.021249557Z" level=info msg="[graphdriver] using prior storage driver: overlay2"
+Mar 01 05:52:27 ubuntu1 dockerd[883]: time="2023-03-01T05:52:27.194699262Z" level=info msg="Loading containers: start."
+Mar 01 05:52:30 ubuntu1 dockerd[883]: time="2023-03-01T05:52:30.261989056Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17.0.0/16. Daem>
+Mar 01 05:52:30 ubuntu1 dockerd[883]: time="2023-03-01T05:52:30.604934946Z" level=info msg="Loading containers: done."
+Mar 01 05:52:31 ubuntu1 dockerd[883]: time="2023-03-01T05:52:31.557619523Z" level=info msg="Docker daemon" commit=bc3805a graphdriver=overlay2 version=23.0.1
+Mar 01 05:52:31 ubuntu1 dockerd[883]: time="2023-03-01T05:52:31.561216099Z" level=info msg="Daemon has completed initialization"
+Mar 01 05:52:31 ubuntu1 dockerd[883]: time="2023-03-01T05:52:31.747298947Z" level=info msg="[core] [Server #7] Server created" module=grpc
+Mar 01 05:52:31 ubuntu1 systemd[1]: Started Docker Application Container Engine.
+Mar 01 05:52:31 ubuntu1 dockerd[883]: time="2023-03-01T05:52:31.866126582Z" level=info msg="API listen on /run/docker.sock"
+lines 1-22/22 (END)
+^C
+ssk@ubuntu1:~$ sudo docker run hello-world
+[sudo] password for ssk:
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+ssk@ubuntu1:~$ docker ps
+permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/json": dial unix /var/run/docker.sock: connect: permission denied
+ssk@ubuntu1:~$ sudo su -
+root@ubuntu1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu1:~# exit
+logout
+ssk@ubuntu1:~$ sudo docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+ssk@ubuntu1:~$ sudo docker ps -a
+CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                      PORTS     NAMES
+cce38a05b0a7   hello-world   "/hello"   3 minutes ago    Exited (0) 3 minutes ago              strange_davinci
+3a8bce56766d   hello-world   "/hello"   13 minutes ago   Exited (0) 13 minutes ago             epic_ptolemy
+ssk@ubuntu1:~$ sudo docker stop
+"docker stop" requires at least 1 argument.
+See 'docker stop --help'.
+
+Usage:  docker stop [OPTIONS] CONTAINER [CONTAINER...]
+
+Stop one or more running containers
+ssk@ubuntu1:~$ systemctl stop docker.service
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to stop 'docker.service'.
+Authenticating as: Saikiran (ssk)
+Password:
+==== AUTHENTICATION COMPLETE ===
+Warning: Stopping docker.service, but it can still be activated by:
+  docker.socket
+ssk@ubuntu1:~$ systemctl status docker.service
+○ docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: inactive (dead) since Wed 2023-03-01 06:29:39 UTC; 10s ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+    Process: 883 ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock (code=exited, status=0/SUCCESS)
+   Main PID: 883 (code=exited, status=0/SUCCESS)
+        CPU: 12.241s
+
+Mar 01 06:29:39 ubuntu1 dockerd[883]: time="2023-03-01T06:29:39.594606630Z" level=info msg="Processing signal 'terminated'"
+Mar 01 06:29:39 ubuntu1 dockerd[883]: time="2023-03-01T06:29:39.695880525Z" level=info msg="[core] [Channel #1] Channel Connectivity change to SHUTDOWN" module=grpc
+Mar 01 06:29:39 ubuntu1 dockerd[883]: time="2023-03-01T06:29:39.704265376Z" level=info msg="[core] [Channel #1 SubChannel #2] Subchannel Connectivity change to SHUTDOW>
+Mar 01 06:29:39 ubuntu1 dockerd[883]: time="2023-03-01T06:29:39.708271521Z" level=info msg="[core] [Channel #1 SubChannel #2] Subchannel deleted" module=grpc
+Mar 01 06:29:39 ubuntu1 dockerd[883]: time="2023-03-01T06:29:39.708432845Z" level=info msg="[core] [Channel #1] Channel deleted" module=grpc
+Mar 01 06:29:39 ubuntu1 dockerd[883]: time="2023-03-01T06:29:39.760853843Z" level=info msg="stopping event stream following graceful shutdown" error="<nil>" module=lib>
+Mar 01 06:29:39 ubuntu1 dockerd[883]: time="2023-03-01T06:29:39.761107780Z" level=info msg="Daemon shutdown complete"
+Mar 01 06:29:39 ubuntu1 systemd[1]: docker.service: Deactivated successfully.
+Mar 01 06:29:39 ubuntu1 systemd[1]: Stopped Docker Application Container Engine.
+Mar 01 06:29:39 ubuntu1 systemd[1]: docker.service: Consumed 12.241s CPU time.
+lines 1-19/19 (END)
+^C
+ssk@ubuntu1:~$ systemctl start docker.service
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to start 'docker.service'.
+Authenticating as: Saikiran (ssk)
+Password:
+==== AUTHENTICATION COMPLETE ===
+ssk@ubuntu1:~$ systemctl status docker.service
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2023-03-01 06:30:26 UTC; 16s ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 41495 (dockerd)
+      Tasks: 14
+     Memory: 68.7M
+        CPU: 2.306s
+     CGroup: /system.slice/docker.service
+             └─41495 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Mar 01 06:30:22 ubuntu1 dockerd[41495]: time="2023-03-01T06:30:22.153423838Z" level=info msg="[core] [Channel #4] Channel Connectivity change to READY" module=grpc
+Mar 01 06:30:22 ubuntu1 dockerd[41495]: time="2023-03-01T06:30:22.530590834Z" level=info msg="[graphdriver] using prior storage driver: overlay2"
+Mar 01 06:30:22 ubuntu1 dockerd[41495]: time="2023-03-01T06:30:22.860067332Z" level=info msg="Loading containers: start."
+Mar 01 06:30:25 ubuntu1 dockerd[41495]: time="2023-03-01T06:30:25.920639373Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17.0.0/16. Da>
+Mar 01 06:30:26 ubuntu1 dockerd[41495]: time="2023-03-01T06:30:26.092700822Z" level=info msg="Loading containers: done."
+Mar 01 06:30:26 ubuntu1 dockerd[41495]: time="2023-03-01T06:30:26.244096848Z" level=info msg="Docker daemon" commit=bc3805a graphdriver=overlay2 version=23.0.1
+Mar 01 06:30:26 ubuntu1 dockerd[41495]: time="2023-03-01T06:30:26.244458446Z" level=info msg="Daemon has completed initialization"
+Mar 01 06:30:26 ubuntu1 dockerd[41495]: time="2023-03-01T06:30:26.747990794Z" level=info msg="[core] [Server #7] Server created" module=grpc
+Mar 01 06:30:26 ubuntu1 systemd[1]: Started Docker Application Container Engine.
+Mar 01 06:30:27 ubuntu1 dockerd[41495]: time="2023-03-01T06:30:27.050009445Z" level=info msg="API listen on /run/docker.sock"
+
+ssk@ubuntu1:~$ sudo su -
+root@ubuntu1:~# systemctl stop docker.service
+Warning: Stopping docker.service, but it can still be activated by:
+  docker.socket
+root@ubuntu1:~# exit
+logout
+ssk@ubuntu1:~$ systemctl status docker.service
+○ docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: inactive (dead) since Wed 2023-03-01 06:31:39 UTC; 23s ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+    Process: 41495 ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock (code=exited, status=0/SUCCESS)
+   Main PID: 41495 (code=exited, status=0/SUCCESS)
+        CPU: 2.410s
+
+Mar 01 06:31:39 ubuntu1 dockerd[41495]: time="2023-03-01T06:31:39.005027152Z" level=info msg="[core] [Channel #1] Channel Connectivity change to SHUTDOWN" module=grpc
+Mar 01 06:31:39 ubuntu1 dockerd[41495]: time="2023-03-01T06:31:39.007287482Z" level=info msg="[core] [Channel #1 SubChannel #2] Subchannel Connectivity change to SHUTD>
+Mar 01 06:31:39 ubuntu1 dockerd[41495]: time="2023-03-01T06:31:39.008001401Z" level=info msg="[core] [Channel #1 SubChannel #2] Subchannel deleted" module=grpc
+Mar 01 06:31:39 ubuntu1 dockerd[41495]: time="2023-03-01T06:31:39.008079188Z" level=info msg="[core] [Channel #1] Channel deleted" module=grpc
+Mar 01 06:31:39 ubuntu1 dockerd[41495]: time="2023-03-01T06:31:39.011250283Z" level=info msg="stopping event stream following graceful shutdown" error="<nil>" module=l>
+Mar 01 06:31:39 ubuntu1 dockerd[41495]: time="2023-03-01T06:31:39.018426896Z" level=info msg="Daemon shutdown complete"
+Mar 01 06:31:39 ubuntu1 dockerd[41495]: time="2023-03-01T06:31:39.022813217Z" level=info msg="stopping event stream following graceful shutdown" error="context cancele>
+Mar 01 06:31:39 ubuntu1 systemd[1]: docker.service: Deactivated successfully.
+Mar 01 06:31:39 ubuntu1 systemd[1]: Stopped Docker Application Container Engine.
+Mar 01 06:31:39 ubuntu1 systemd[1]: docker.service: Consumed 2.410s CPU time.
+
+ssk@ubuntu1:~$ sudo systemctl start docker.service
+ssk@ubuntu1:~$ sudo systemctl status docker.service
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2023-03-01 06:33:10 UTC; 12s ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 44227 (dockerd)
+      Tasks: 14
+     Memory: 29.0M
+        CPU: 5.801s
+     CGroup: /system.slice/docker.service
+             └─44227 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Mar 01 06:32:59 ubuntu1 dockerd[44227]: time="2023-03-01T06:32:59.472903244Z" level=info msg="[core] [Channel #4] Channel Connectivity change to READY" module=grpc
+Mar 01 06:33:02 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:02.425358044Z" level=info msg="[graphdriver] using prior storage driver: overlay2"
+Mar 01 06:33:02 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:02.460015919Z" level=info msg="Loading containers: start."
+Mar 01 06:33:06 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:06.283985505Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17.0.0/16. Da>
+Mar 01 06:33:07 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:07.768418616Z" level=info msg="Loading containers: done."
+Mar 01 06:33:09 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:09.660855909Z" level=info msg="Docker daemon" commit=bc3805a graphdriver=overlay2 version=23.0.1
+Mar 01 06:33:09 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:09.667062942Z" level=info msg="Daemon has completed initialization"
+Mar 01 06:33:10 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:10.865377190Z" level=info msg="[core] [Server #7] Server created" module=grpc
+Mar 01 06:33:10 ubuntu1 systemd[1]: Started Docker Application Container Engine.
+Mar 01 06:33:10 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:10.976334735Z" level=info msg="API listen on /run/docker.sock"
+lines 1-22/22 (END)
+ssk@ubuntu1:~$ sudo docker ps -a
+CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                      PORTS     NAMES
+cce38a05b0a7   hello-world   "/hello"   17 minutes ago   Exited (0) 17 minutes ago             strange_davinci
+3a8bce56766d   hello-world   "/hello"   28 minutes ago   Exited (0) 28 minutes ago             epic_ptolemy
+ssk@ubuntu1:~$ docker pull nginx
+Using default tag: latest
+permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/images/create?fromImage=nginx&tag=latest": dial unix /var/run/docker.sock: connect: permission denied
+ssk@ubuntu1:~$ sudo su -
+root@ubuntu1:~# docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+bb263680fed1: Pull complete
+258f176fd226: Pull complete
+a0bc35e70773: Pull complete
+077b9569ff86: Pull complete
+3082a16f3b61: Pull complete
+7e9b29976cce: Pull complete
+Digest: sha256:dc022e6b6a3419583c65fd659f82aec917c1d67177a40f0614bfb145bee1bed6
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+root@ubuntu1:~# docker images -all
+unknown shorthand flag: 'l' in -ll
+See 'docker images --help'.
+root@ubuntu1:~# docker images --all
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+nginx         latest    3f8a00f137a0   2 weeks ago     142MB
+hello-world   latest    feb5d9fea6a5   17 months ago   13.3kB
+root@ubuntu1:~# docker pull ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+677076032cca: Pull complete
+Digest: sha256:9a0bdde4188b896a372804be2384015e90e3f84906b750c1a53539b585fbbe7f
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+root@ubuntu1:~# service status docker
+status: unrecognized service
+root@ubuntu1:~# systemctl status docker.service
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2023-03-01 06:33:10 UTC; 19min ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 44227 (dockerd)
+      Tasks: 14
+     Memory: 28.1M
+        CPU: 13.588s
+     CGroup: /system.slice/docker.service
+             └─44227 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Mar 01 06:32:59 ubuntu1 dockerd[44227]: time="2023-03-01T06:32:59.472903244Z" level=info msg="[core] [Channel #4] Channel Connectivity change to READY" module=grpc
+Mar 01 06:33:02 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:02.425358044Z" level=info msg="[graphdriver] using prior storage driver: overlay2"
+Mar 01 06:33:02 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:02.460015919Z" level=info msg="Loading containers: start."
+Mar 01 06:33:06 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:06.283985505Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17.0.0/16. Da>
+Mar 01 06:33:07 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:07.768418616Z" level=info msg="Loading containers: done."
+Mar 01 06:33:09 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:09.660855909Z" level=info msg="Docker daemon" commit=bc3805a graphdriver=overlay2 version=23.0.1
+Mar 01 06:33:09 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:09.667062942Z" level=info msg="Daemon has completed initialization"
+Mar 01 06:33:10 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:10.865377190Z" level=info msg="[core] [Server #7] Server created" module=grpc
+Mar 01 06:33:10 ubuntu1 systemd[1]: Started Docker Application Container Engine.
+Mar 01 06:33:10 ubuntu1 dockerd[44227]: time="2023-03-01T06:33:10.976334735Z" level=info msg="API listen on /run/docker.sock"
+lines 1-22/22 (END)
+^C
+root@ubuntu1:~# docker images --all
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+nginx         latest    3f8a00f137a0   2 weeks ago     142MB
+ubuntu        latest    58db3edaf2be   4 weeks ago     77.8MB
+hello-world   latest    feb5d9fea6a5   17 months ago   13.3kB
+root@ubuntu1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu1:~# docker container run -dt --name mynginx nginx
+3f1a68cb6fe228c9bf2f63637073f1b77a44e6411bce67aefecdf77524c6a222
+root@ubuntu1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS         PORTS     NAMES
+3f1a68cb6fe2   nginx     "/docker-entrypoint.…"   14 seconds ago   Up 4 seconds   80/tcp    mynginx
+root@ubuntu1:~# docker container run -dt --name myubuntu ubuntu
+498d11dd4f5e1e5ddb7a0e1d3a4ca2f6883958413351f9f899b547497b80d357
+root@ubuntu1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS              PORTS     NAMES
+498d11dd4f5e   ubuntu    "/bin/bash"              10 seconds ago   Up 5 seconds                  myubuntu
+3f1a68cb6fe2   nginx     "/docker-entrypoint.…"   2 minutes ago    Up About a minute   80/tcp    mynginx
+root@ubuntu1:~# docker container exec -it myubuntu bash
+root@498d11dd4f5e:/# exit
+exit
+root@ubuntu1:~# docker continer status 498d11dd4f5e
+docker: 'continer' is not a docker command.
+See 'docker --help'
+root@ubuntu1:~# docker continer stop 498d11dd4f5e
+docker: 'continer' is not a docker command.
+See 'docker --help'
+root@ubuntu1:~# docker container status 498d11dd4f5e
+
+Usage:  docker container COMMAND
+
+Manage containers
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  exec        Execute a command in a running container
+  export      Export a container's filesystem as a tar archive
+  inspect     Display detailed information on one or more containers
+  kill        Kill one or more running containers
+  logs        Fetch the logs of a container
+  ls          List containers
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  prune       Remove all stopped containers
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  run         Create and run a new container from an image
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  wait        Block until one or more containers stop, then print their exit codes
+
+Run 'docker container COMMAND --help' for more information on a command.
+root@ubuntu1:~# docker container stop 498d11dd4f5e
+498d11dd4f5e
+root@ubuntu1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+3f1a68cb6fe2   nginx     "/docker-entrypoint.…"   7 minutes ago   Up 6 minutes   80/tcp    mynginx
+root@ubuntu1:~# docker container stop mynginx
+mynginx
+root@ubuntu1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu1:~# docker images --all
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+nginx         latest    3f8a00f137a0   2 weeks ago     142MB
+ubuntu        latest    58db3edaf2be   4 weeks ago     77.8MB
+hello-world   latest    feb5d9fea6a5   17 months ago   13.3kB
+root@ubuntu1:~# docker image rm 3f8a00f137a0
+Error response from daemon: conflict: unable to delete 3f8a00f137a0 (must be forced) - image is being used by stopped container 3f1a68cb6fe2
+root@ubuntu1:~# docker rmi 3f8a00f137a0
+Error response from daemon: conflict: unable to delete 3f8a00f137a0 (must be forced) - image is being used by stopped container 3f1a68cb6fe2
+root@ubuntu1:~# docker images --all
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+nginx         latest    3f8a00f137a0   2 weeks ago     142MB
+ubuntu        latest    58db3edaf2be   4 weeks ago     77.8MB
+hello-world   latest    feb5d9fea6a5   17 months ago   13.3kB
+root@ubuntu1:~# docker rm 3f1a68cb6fe2
+3f1a68cb6fe2
+root@ubuntu1:~# docker rmi 3f1a68cb6fe2
+Error response from daemon: No such image: 3f1a68cb6fe2:latest
+root@ubuntu1:~# docker rmi 3f8a00f137a0
+Untagged: nginx:latest
+Untagged: nginx@sha256:dc022e6b6a3419583c65fd659f82aec917c1d67177a40f0614bfb145bee1bed6
+Deleted: sha256:3f8a00f137a0d2c8a2163a09901e28e2471999fde4efc2f9570b91f1c30acf94
+Deleted: sha256:ccfe545858415bccd69b8edff4da7344d782985f22ad4398bdaa7358d3388d15
+Deleted: sha256:e34f63c02e162795cc8a2b43d1a3ff0ccd6d3456ce12aebb74452e252d1ecb8a
+Deleted: sha256:cf7515030d4de4fb66994e0d9fccbaf19fcfbf46f7dad8cf895051750b840128
+Deleted: sha256:1486739bc51436dd10d2bc1d45e130771c73d3aee35e49971905aa767d195342
+Deleted: sha256:452008e5f3c114989bfc978a2829cf061f0868463f3553b4e20c964a41eda749
+Deleted: sha256:4695cdfb426a05673a100e69d2fe9810d9ab2b3dd88ead97c6a3627246d83815
+root@ubuntu1:~# docker images --all
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+ubuntu        latest    58db3edaf2be   4 weeks ago     77.8MB
+hello-world   latest    feb5d9fea6a5   17 months ago   13.3kB
+root@ubuntu1:~# docker rm feb5d9fea6a5
+Error response from daemon: No such container: feb5d9fea6a5
+root@ubuntu1:~# docker rm 58db3edaf2be
+Error response from daemon: No such container: 58db3edaf2be
+root@ubuntu1:~# docker image rm 58db3edaf2be
+Error response from daemon: conflict: unable to delete 58db3edaf2be (must be forced) - image is being used by stopped container 498d11dd4f5e
+root@ubuntu1:~#
